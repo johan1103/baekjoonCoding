@@ -29,7 +29,7 @@ int main() {
 }
 
 int solve_problem() {
-	int result = INF;
+	int result = 0;
 	int noMark = 0;
 	int backTracking = N;
 	beforeLoc[1] = -1;
@@ -40,9 +40,12 @@ int solve_problem() {
 		backTracking = beforeLoc[backTracking];
 		if (backTracking == -1)
 			break;
-		result = max(result, second_dijkstra(srt, fin));
+		int tmp = second_dijkstra(srt, fin);
+		if (tmp == INF)
+			return -1;
+		result = max(result, tmp);
 	}
-	return result - result;
+	return result - noMark;
 }
 
 
@@ -100,7 +103,7 @@ int first_dijkstra() {
 			if (dist[here] + map[here][i].second < dist[next]) {
 				dist[next] = dist[here] + map[here][i].second;
 				beforeLoc[next] = here;
-				;				qu.push(make_pair(-dist[next], next));
+				qu.push(make_pair(-dist[next], next));
 			}
 		}
 	}
